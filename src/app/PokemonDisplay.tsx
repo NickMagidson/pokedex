@@ -19,7 +19,8 @@ export default function PokemonDisplay({ name, sprite }: PokemonDisplayProps) {
     const fetchPokemon = async () => {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${selectedPokemon}`);
       const data = await response.json();
-      setPokemonData({ name: data.name, sprite: data.sprites.front_default });
+      // console.log(JSON.stringify(data.sprites.other.['official-artwork'].front_default));
+      setPokemonData({ name: data.name, sprite: data.sprites.other['official-artwork'].front_default });
     };
 
     fetchPokemon();
@@ -30,7 +31,7 @@ export default function PokemonDisplay({ name, sprite }: PokemonDisplayProps) {
       <div className="flex flex-col justify-center">
         <SearchPokemon />
         <div className="flex flex-col justify-center align-middle">
-          <Image src={pokemonData.sprite} alt={pokemonData.name} width={96} height={96} className=" mx-auto" />
+          <Image src={pokemonData.sprite} alt={pokemonData.name} width={100} height={100} className=" mx-auto" />
           <h1 className="text-center">{pokemonData.name}</h1>
         </div>
       </div>

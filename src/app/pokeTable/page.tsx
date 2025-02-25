@@ -1,13 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
+import {
+  Card,
+  CardContent,
+  // CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 interface PokemonTableProps {
+  id: number;
   name: string;
   url: string;
   stats: {
     base_stat: number;
   }[];
   sprites: {
+    other: any;
     front_default: string;
   };
 }
@@ -25,7 +35,7 @@ interface PokemonList {
 
 
 export default async function PokemonTable({}: PokemonTableProps) {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50');
   const pokemonList: PokemonList = await response.json();
   // console.log(pokemonList);
   // console.log(JSON.stringify(pokemonList.results));
@@ -40,43 +50,28 @@ export default async function PokemonTable({}: PokemonTableProps) {
   );
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 justify-center items-center w-4/5 sm:items-start ">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">Name</th>
-                <th scope="col" className="px-6 py-3">Image</th>
-                <th scope="col" className="px-6 py-3">HP</th>
-                <th scope="col" className="px-6 py-3">Attack</th>
-                <th scope="col" className="px-6 py-3">Defense</th>
-              </tr>
-            </thead>
-            <tbody>
-              {detailedPokemonList.map((pokemon) => (
-                <tr key={pokemon.name} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {pokemon.name}
-                  </th>
-                  <td className="px-6 py-4">
-                    <Image src={pokemon.sprites.front_default} alt={pokemon.name} width={96} height={96} />
-                  </td>
-                  <td className="px-6 py-4">
-                    {pokemon.stats[0].base_stat}
-                  </td>
-                  <td className="px-6 py-4">
-                    {pokemon.stats[1].base_stat}
-                  </td>
-                  <td className="px-6 py-4">
-                    {pokemon.stats[2].base_stat}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </main>
-    </div>
+    <main className='p-3 mx-auto' style={{ maxWidth: '29rem' }}>
+      <h1>Pokedex Card Grid view</h1>
+      <div className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3 rounded-lg bg-slate-300" >
+        {detailedPokemonList.map((pokemon) => (
+          <Card key={pokemon.name} className="flex flex-col justify-center w-auto">
+            <CardHeader className='flex flex-row justify-end p-0 pt-1 pe-2'>
+              <CardTitle className='font-thin'>{pokemon.id}</CardTitle>
+            </CardHeader>
+            <CardContent className='p-0'>
+              <Image className='mx-auto pb-1' src={pokemon.sprites.other['official-artwork'].front_default} alt={pokemon.name} width={70} height={70} />
+              {/* <CardDescription>
+                <p>HP: {pokemon.stats[0].base_stat}</p>
+                <p>Attack: {pokemon.stats[1].base_stat}</p>
+                <p>Defense: {pokemon.stats[2].base_stat}</p>
+              </CardDescription> */}
+            </CardContent>
+            <CardFooter className='p-0 pb-1'>
+              <CardTitle className='mx-auto font-normal'>{pokemon.name}</CardTitle>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </main>
   );
 }
