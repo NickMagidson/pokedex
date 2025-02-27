@@ -17,13 +17,16 @@ Styling is still in experimentation
 2. Autocomplete
   - ~~Install Mui Autocomplete~~
   - ~~Refactor SearchPokemon for that in lieu of Shad/Cn~~
+  - Add sprite into Autocomplete
+    ~~- Add image~~
+    - Fix img Next bug
   - Combine the card render and search into one page. Console.log the click for testing
   - Extract Autocomplete into it's own component?
-  - Add order number and sprite in the autocomplete input
 
+3. Add loading screen for initial load. Combined componentes
 
-3. Page per Pokemon
+4. Page per Pokemon
   - On Card click, route to another page of that specific pokemon
 
  
-4. Filter cards by type
+5. Filter cards by type

@@ -7,6 +7,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 interface PokemonOption {
   name: string;
   order: number;
+  sprite: string;
 }
 
 export default function SearchPokemon() {
@@ -19,12 +20,12 @@ export default function SearchPokemon() {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
       const data = await response.json();
       const pokemonData = await Promise.all(
-        data.results.map(async (pokemon) => {
+        data.results.map(async (pokemon: { url: string | URL | Request; }) => {
           const pokemonDetails = await fetch(pokemon.url);
           const pokemonInfo = await pokemonDetails.json();
           return {
             name: pokemonInfo.name,
-            sprite: pokemonInfo.sprites.front_default,
+            sprite: pokemonInfo.sprites.other['official-artwork'].front_default,
           };
         })
       );
@@ -49,20 +50,21 @@ export default function SearchPokemon() {
     <Autocomplete
       disablePortal
       options={options}
+      inputValue={inputValue}
       getOptionLabel={(option) => option.name}
       sx={{ width: 300, background: 'aliceblue' }}
       onInputChange={handleSearch}
       onChange={handleSelect}
-      // renderOption={(props, option) => (
-      //   <li {...props}>
-      //     <img
-      //       src={option.sprite}
-      //       alt={option.name}
-      //       style={{ marginRight: 8, width: 20, height: 20 }}
-      //     />
-      //     {option.name}
-      //   </li>
-      // )}
+      renderOption={(props, option) => (
+        <li {...props}>
+          <img
+            src={option.sprite}
+            alt={option.name}
+            style={{ marginRight: 8, width: 40, height: 40 }}
+          />
+          {option.name}
+        </li>
+      )}
       renderInput={(params) => (
         <TextField {...params} label="Search Pokémon!" />
       )}
