@@ -8,10 +8,10 @@ Styling is still in experimentation
 
 
 1. PokeCard Page
-  - Body should have full height and no overflow
-  - Fixed height and over flow for grid. Z-indexs
-  - Add footer with enough room for searchbard
-  - Convert Cards into framer motion divs
+  ~~- Body should have full height and no overflow~~
+  ~~- Fixed height and over flow for grid. Z-indexs~~
+  ~~- Add footer with enough room for searchbard~~
+  ~~- Convert Cards into framer motion divs~~
 
 
 2. Autocomplete
@@ -23,5 +23,5 @@ Styling is still in experimentation
 3. Page per Pokemon
   - On Card click, route to another page of that specific pokemon
 
-
+ 
 4. Filter cards by type

@@ -27,7 +27,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`} 
-        // style={{ backgroundColor: "#DC0A2D" }}
+        style={
+          { 
+            // backgroundColor: "#DC0A2D" 
+            height: "100vh",
+            overflow: "hidden",
+          }}
       >
         <PokemonProvider>
           {children}

@@ -9,6 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Header from '../Header';
+import SearchPokemon from '../SearchPokemon';
+import * as motion from "motion/react-client"
+import Footer from '../Footer';
 
 interface PokemonTableProps {
   id: number;
@@ -53,10 +56,28 @@ export default async function PokemonTable({}: PokemonTableProps) {
   return (
     <>
       <Header />
+      {/* <SearchPokemon /> */}
       <main className='p-3 mx-auto' style={{ maxWidth: '29rem' }}>
-        <div className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3 rounded-lg bg-white inset-shadow-sm" >
+        <div 
+          className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3
+          rounded-lg bg-white shadow-inner" 
+          style={{ maxHeight: 'calc(100vh - 180px)', overflowY: 'auto', boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 4px inset, rgba(0, 0, 0, 0.65) 0px 2px 8px inset' }}
+          >
           {detailedPokemonList.map((pokemon) => (
-            <Card key={pokemon.name} className="flex flex-col justify-center w-auto shadow-x">
+            <motion.div
+            key={pokemon.name}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            variants={{
+              visible: { opacity: 1, scale: 1 },
+              hidden: { opacity: 0, scale: 0 }
+            }}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.8 }}
+          >
+            <Card className="flex flex-col justify-center w-auto shadow-xl">
               <CardHeader className='flex flex-row justify-end p-0 pt-1 pe-2'>
                 <CardTitle className='font-thin'>{pokemon.id}</CardTitle>
               </CardHeader>
@@ -72,26 +93,11 @@ export default async function PokemonTable({}: PokemonTableProps) {
                 <CardTitle className='mx-auto font-normal'>{pokemon.name}</CardTitle>
               </CardFooter>
             </Card>
+          </motion.div>
           ))}
         </div>
-        <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nickmagidson.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/moon.png"
-            alt="Moon logo"
-            width={20}
-            height={20}
-          />
-          Built by Nick Magidson →
-        </a>
-      </footer>
       </main>
+      <Footer />
     </>
   );
 }
