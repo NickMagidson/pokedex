@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import Header from '../Header';
-import SearchPokemon from '../SearchPokemon';
+// import SearchPokemon from '../SearchPokemon';
 import * as motion from "motion/react-client"
 import Footer from '../Footer';
 
@@ -77,7 +77,7 @@ export default async function PokemonTable({}: PokemonTableProps) {
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.8 }}
           >
-            <Card className="flex flex-col justify-center w-auto shadow-xl">
+            <Card className="flex flex-col justify-center w-auto shadow-md">
               <CardHeader className='flex flex-row justify-end p-0 pt-1 pe-2'>
                 <CardTitle className='font-thin'>{pokemon.id}</CardTitle>
               </CardHeader>
