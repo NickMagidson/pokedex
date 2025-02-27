@@ -4,33 +4,44 @@ import { usePokemon } from '../context/PokemonContext';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
+interface PokemonOption {
+  name: string;
+  order: number;
+}
+
 export default function SearchPokemon() {
   const { selectedPokemon, setSelectedPokemon } = usePokemon();
   const [inputValue, setInputValue] = useState(selectedPokemon);
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<PokemonOption[]>([]);
 
   useEffect(() => {
-    if (inputValue.length) {
-      const fetchPokemon = async () => {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1000`);
-        const data = await response.json();
-        const filteredOptions = data.results
-          .filter((pokemon: { name: string }) => pokemon.name.includes(inputValue))
-          .map((pokemon: { name: string }) => pokemon.name);
-        setOptions(filteredOptions);
-      };
-
-      fetchPokemon();
-    }
-  }, [inputValue]);
+    const fetchPokemon = async () => {
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+      const data = await response.json();
+      const pokemonData = await Promise.all(
+        data.results.map(async (pokemon) => {
+          const pokemonDetails = await fetch(pokemon.url);
+          const pokemonInfo = await pokemonDetails.json();
+          return {
+            name: pokemonInfo.name,
+            sprite: pokemonInfo.sprites.front_default,
+          };
+        })
+      );
+      setOptions(pokemonData);
+    };
+  
+    fetchPokemon();
+  }, []);
+  
 
   const handleSearch = (event: React.SyntheticEvent<Element, Event>, value: string) => {
     setInputValue(value);
   };
 
-  const handleSelect = (event: any, newValue: string | null) => {
+  const handleSelect = (event: React.SyntheticEvent<Element, Event>, newValue: PokemonOption | null) => {
     if (newValue) {
-      setSelectedPokemon(newValue);
+      setSelectedPokemon(newValue.name);
     }
   };
 
@@ -38,10 +49,23 @@ export default function SearchPokemon() {
     <Autocomplete
       disablePortal
       options={options}
-      sx={{ width: 300, background: "aliceblue" }}
+      getOptionLabel={(option) => option.name}
+      sx={{ width: 300, background: 'aliceblue' }}
       onInputChange={handleSearch}
       onChange={handleSelect}
-      renderInput={(params) => <TextField {...params} label="Search Pokémon" />}
+      // renderOption={(props, option) => (
+      //   <li {...props}>
+      //     <img
+      //       src={option.sprite}
+      //       alt={option.name}
+      //       style={{ marginRight: 8, width: 20, height: 20 }}
+      //     />
+      //     {option.name}
+      //   </li>
+      // )}
+      renderInput={(params) => (
+        <TextField {...params} label="Search Pokémon!" />
+      )}
     />
   );
 }

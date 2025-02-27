@@ -15,9 +15,11 @@ Styling is still in experimentation
 
 
 2. Autocomplete
-  - Install Mui Autocomplete
-  - Refactor SearchPokemon for that in lieu of Shad/Cn
+  - ~~Install Mui Autocomplete~~
+  - ~~Refactor SearchPokemon for that in lieu of Shad/Cn~~
   - Combine the card render and search into one page. Console.log the click for testing
+  - Extract Autocomplete into it's own component?
+  - Add order number and sprite in the autocomplete input
 
 
 3. Page per Pokemon
