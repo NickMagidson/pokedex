@@ -12,7 +12,7 @@ export default async function SinglePokemon() {
   return (
     <PokemonDisplay 
       name={singlePokemon.name} 
-      sprite={singlePokemon.sprites.front_default} 
+      sprite={singlePokemon.sprites.other['official-artwork'].front_default} 
     />
   );
 }

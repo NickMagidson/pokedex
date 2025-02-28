@@ -1,26 +1,73 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePokemon } from '../context/PokemonContext';
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
+interface PokemonOption {
+  name: string;
+  order: number;
+  sprite: string;
+}
 
 export default function SearchPokemon() {
   const { selectedPokemon, setSelectedPokemon } = usePokemon();
   const [inputValue, setInputValue] = useState(selectedPokemon);
+  const [options, setOptions] = useState<PokemonOption[]>([]);
 
-  const handleSearch = (e: { target: { value: string } }) => {
-    setInputValue(e.target.value);
-  }
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
+      const data = await response.json();
+      const pokemonData = await Promise.all(
+        data.results.map(async (pokemon: { url: string | URL | Request; }) => {
+          const pokemonDetails = await fetch(pokemon.url);
+          const pokemonInfo = await pokemonDetails.json();
+          return {
+            name: pokemonInfo.name,
+            sprite: pokemonInfo.sprites.other['official-artwork'].front_default,
+          };
+        })
+      );
+      setOptions(pokemonData);
+    };
+  
+    fetchPokemon();
+  }, []);
+  
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSelectedPokemon(inputValue);
-  }
+  const handleSearch = (event: React.SyntheticEvent<Element, Event>, value: string) => {
+    setInputValue(value);
+  };
+
+  const handleSelect = (event: React.SyntheticEvent<Element, Event>, newValue: PokemonOption | null) => {
+    if (newValue) {
+      setSelectedPokemon(newValue.name);
+    }
+  };
 
   return (
-    <form className='flex flex-row space-x-2' onSubmit={handleSubmit}>
-      <Input onChange={handleSearch} type="text" placeholder="Search pokemon here!" value={inputValue} />
-      <Button type="submit">Search</Button>
-    </form>
-  )
+    <Autocomplete
+      disablePortal
+      options={options}
+      inputValue={inputValue}
+      getOptionLabel={(option) => option.name}
+      sx={{ width: 300, background: 'aliceblue' }}
+      onInputChange={handleSearch}
+      onChange={handleSelect}
+      renderOption={(props, option) => (
+        <li {...props}>
+          <img
+            src={option.sprite}
+            alt={option.name}
+            style={{ marginRight: 8, width: 40, height: 40 }}
+          />
+          {option.name}
+        </li>
+      )}
+      renderInput={(params) => (
+        <TextField {...params} label="Search Pokémon!" />
+      )}
+    />
+  );
 }
