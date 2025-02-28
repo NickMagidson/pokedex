@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SinglePokemon from "./pokemon";
+import SinglePokemon from "./SinglePokemon";
 
 export default function Home() {
 

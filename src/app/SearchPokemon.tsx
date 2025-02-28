@@ -10,6 +10,10 @@ interface PokemonOption {
   sprite: string;
 }
 
+// interface SearchPokemonProps {
+//   initialPokemon: PokemonOption[];
+// }
+
 export default function SearchPokemon() {
   const { selectedPokemon, setSelectedPokemon } = usePokemon();
   const [inputValue, setInputValue] = useState(selectedPokemon);
@@ -43,6 +47,7 @@ export default function SearchPokemon() {
   const handleSelect = (event: React.SyntheticEvent<Element, Event>, newValue: PokemonOption | null) => {
     if (newValue) {
       setSelectedPokemon(newValue.name);
+      console.log(`Selected Pokémon: ${newValue.name}`);
     }
   };
 
@@ -52,19 +57,20 @@ export default function SearchPokemon() {
       options={options}
       inputValue={inputValue}
       getOptionLabel={(option) => option.name}
-      sx={{ width: 300, background: 'aliceblue' }}
+      sx={{ width: 300, background: 'aliceblue', marginInline: 'auto' }}
       onInputChange={handleSearch}
       onChange={handleSelect}
-      renderOption={(props, option) => (
-        <li {...props}>
-          <img
-            src={option.sprite}
-            alt={option.name}
-            style={{ marginRight: 8, width: 40, height: 40 }}
-          />
-          {option.name}
-        </li>
-      )}
+      className='rounded-lg'
+      // renderOption={(props, option) => (
+      //   <li {...props}>
+      //     <img
+      //       src={option.sprite}
+      //       alt={option.name}
+      //       style={{ marginRight: 8, width: 40, height: 40 }}
+      //     />
+      //     {option.name}
+      //   </li>
+      // )}
       renderInput={(params) => (
         <TextField {...params} label="Search Pokémon!" />
       )}
