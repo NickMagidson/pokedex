@@ -14,10 +14,8 @@ export default async function PokemonTable() {
     <>
       <Header />
       <Suspense fallback={<h1 style={{ fontSize: '2em', textAlign: 'center' }}>Loading...</h1>}>
-          <SearchPokemon />
-          <PokemonCardList 
-            pokemonList={pokemonData}
-          />  
+        <SearchPokemon />
+        <PokemonCardList pokemonList={pokemonData} />  
       </Suspense>
       <Footer />
     </>

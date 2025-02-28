@@ -8,7 +8,11 @@ interface PokemonTableProps {
     base_stat: number;
   }[];
   sprites: {
-    other: any;
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
     front_default: string;
   };
 }
