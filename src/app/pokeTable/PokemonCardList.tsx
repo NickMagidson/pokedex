@@ -45,7 +45,7 @@ export default async function PokemonCardList({ pokemonList }: PokemonCardListPr
       className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3
       rounded-lg bg-white shadow-inner" 
       style={{ 
-        maxHeight: 'calc(100vh - 180px)', 
+        maxHeight: '30rem', 
         overflowY: 'auto', 
         boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 4px inset, rgba(0, 0, 0, 0.65) 0px 2px 8px inset' 
       }}
