@@ -41,25 +41,25 @@ export default async function PokemonCardList({ pokemonList }: PokemonCardListPr
 
   return (
     <main className='p-3 mx-auto' style={{ maxWidth: '29rem' }}>
-    <div 
-      className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3
-      rounded-lg bg-white shadow-inner" 
-      style={{ 
-        maxHeight: '30rem', 
-        overflowY: 'auto', 
-        boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 4px inset, rgba(0, 0, 0, 0.65) 0px 2px 8px inset' 
-      }}
-      >
-      {detailedPokemonList.map((pokemon) => (
-        <PokemonDisplayCard
-          key={pokemon.id}
-          id={pokemon.id}
-          name={pokemon.name}
-          sprite={pokemon.sprites.other['official-artwork'].front_default} 
-          altText={pokemon.name} 
-        />
-      ))}
-    </div>
-  </main>
+      <div 
+        className="grid grid-cols-3 gap-4 row-start-2 justify-center items-center w-full p-3
+        rounded-lg bg-white shadow-inner" 
+        style={{ 
+          maxHeight: '30rem', 
+          overflowY: 'auto', 
+          boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 4px inset, rgba(0, 0, 0, 0.65) 0px 2px 8px inset' 
+        }}
+        >
+        {detailedPokemonList.map((pokemon) => (
+          <PokemonDisplayCard
+            key={pokemon.id}
+            id={pokemon.id}
+            name={pokemon.name}
+            sprite={pokemon.sprites.other['official-artwork'].front_default} 
+            altText={pokemon.name} 
+          />
+        ))}
+      </div>
+    </main>
   )
 }

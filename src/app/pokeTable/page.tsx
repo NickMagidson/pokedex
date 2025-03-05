@@ -5,9 +5,12 @@ import PokemonCardList from './PokemonCardList';
 // import SearchPokemonServer from '../SearchPokemonServer';
 import SearchPokemon from '../SearchPokemon';
 
+// const PokemonCardList = React.lazy(() => import('./PokemonCardList'));
+// const SearchPokemon = React.lazy(() => import('../SearchPokemon'));
+
 
 export default async function PokemonTable() {
-  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=50');
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
   const pokemonData = await response.json();
 
   return (
