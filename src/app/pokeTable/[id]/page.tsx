@@ -1,6 +1,7 @@
 import Header from '../../Header'
 
-export default async function PokemonDetail({ params }: { params: { id: string } }) {
+export default async function PokemonDetail(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
   if (!res.ok) return <h1>Pokémon not found</h1>;
 
