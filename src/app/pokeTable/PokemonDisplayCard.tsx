@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { motion } from "motion/react"
 import {
   Card,
@@ -11,6 +12,16 @@ import {
 } from "@/components/ui/card"
 
 export default function PokemonDisplayCard({ name, sprite, id, altText }: { name: string, sprite: string, id: number, altText: string }) {
+  const router = useRouter()
+
+  const handleCardRouteClick = (id: number) => {
+    router.push(`/pokeTable/${id}`)
+  }
+
+  const capitalizeFirstLetter = (word: string) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   return (
     <motion.div
     key={name}
@@ -24,7 +35,7 @@ export default function PokemonDisplayCard({ name, sprite, id, altText }: { name
     }}
     whileHover={{ scale: 1.2 }}
     whileTap={{ scale: 0.8 }}
-    onClick={() => console.log(name)}
+    onClick={() => handleCardRouteClick(id)}
   >
     <Card className="flex flex-col justify-center w-auto shadow-md">
       <CardHeader className='flex flex-row justify-end p-0 pt-1 pe-2'>
@@ -39,7 +50,7 @@ export default function PokemonDisplayCard({ name, sprite, id, altText }: { name
         </CardDescription> */}
       </CardContent>
       <CardFooter className='p-0 pb-1 pt-1 rounded-lg bg-gray-100'>
-        <CardTitle className='mx-auto font-normal'>{name}</CardTitle>
+        <CardTitle className='mx-auto font-normal'>{capitalizeFirstLetter(name)}</CardTitle>
       </CardFooter>
     </Card>
   </motion.div>
