@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import Header from '../Header';
 import Footer from '../Footer';
-import PokemonCardList from './PokemonCardList';
+import PokemonCardList from '../PokemonCardList';
 // import SearchPokemonServer from '../SearchPokemonServer';
 import SearchPokemon from '../SearchPokemon';
 

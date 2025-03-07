@@ -1,31 +1,21 @@
-import Image from "next/image";
-import SinglePokemon from "./SinglePokemon";
+import React, { Suspense } from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import PokemonCardList from './PokemonCardList'
+import SearchPokemon from './SearchPokemon';
 
-export default function Home() {
+export default async function Home() {
+  const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
+  const pokemonData = await response.json();
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 
-      font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center border-red-500 sm:items-start ">
-          <SinglePokemon />
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nickmagidson.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/moon.png"
-            alt="Moon logo"
-            width={20}
-            height={20}
-          />
-          Built by Nick Magidson →
-        </a>
-      </footer>
-    </div>
+    <>
+      <Header />
+      <Suspense fallback={<h1 style={{ fontSize: '2em', textAlign: 'center' }}>Loading...</h1>}>
+        <SearchPokemon />
+        <PokemonCardList pokemonList={pokemonData} />  
+      </Suspense>
+      <Footer />
+    </>
   );
 }
