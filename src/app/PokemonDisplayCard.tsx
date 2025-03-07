@@ -15,7 +15,7 @@ export default function PokemonDisplayCard({ name, sprite, id, altText }: { name
   const router = useRouter()
 
   const handleCardRouteClick = (id: number) => {
-    router.push(`/pokeTable/${id}`)
+    router.push(`/${id}`)
   }
 
   return (
