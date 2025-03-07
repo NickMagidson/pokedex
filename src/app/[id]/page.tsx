@@ -51,6 +51,15 @@ export default async function PokemonDetail(props: { params: Promise<{ id: strin
 
   const pokemon = await res.json();
 
+    // Fetching the species data for the flavor text
+    const speciesRes = await fetch(pokemon.species.url);
+    const speciesData = await speciesRes.json();
+  
+    // Extracting the English flavor text
+    const flavorTextEntry = speciesData.flavor_text_entries.find((entry: any) => entry.language.name === 'en');
+    const flavorText = flavorTextEntry ? flavorTextEntry.flavor_text : 'No flavor text available';
+  
+
   return (
     <>
       {/* <Header /> */}
@@ -62,7 +71,7 @@ export default async function PokemonDetail(props: { params: Promise<{ id: strin
         <p className='font-bold mr-1 '># {pokemon.id}</p>
       </header>
 
-      <div className='px-2'>
+      <div>
 
 
         <Image 
@@ -121,6 +130,10 @@ export default async function PokemonDetail(props: { params: Promise<{ id: strin
                 <p>Choose a move</p> {/* Placeholder for dropdown */}
                 <p className="text-sm font-light text-gray-500">Moves</p>
               </div>
+            </div>
+
+            <div className='p-4'>
+              <p className="text-xs font-normal text-black">{flavorText}</p>
             </div>
 
 
