@@ -18,10 +18,6 @@ export default function PokemonDisplayCard({ name, sprite, id, altText }: { name
     router.push(`/pokeTable/${id}`)
   }
 
-  const capitalizeFirstLetter = (word: string) => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-
   return (
     <motion.div
     key={name}
@@ -50,7 +46,7 @@ export default function PokemonDisplayCard({ name, sprite, id, altText }: { name
         </CardDescription> */}
       </CardContent>
       <CardFooter className='p-0 pb-1 pt-1 rounded-lg bg-gray-100'>
-        <CardTitle className='mx-auto font-normal'>{capitalizeFirstLetter(name)}</CardTitle>
+        <CardTitle className='mx-auto font-normal capitalize'>{name}</CardTitle>
       </CardFooter>
     </Card>
   </motion.div>
