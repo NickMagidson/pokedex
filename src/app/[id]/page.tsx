@@ -136,6 +136,8 @@ export default async function PokemonDetail(props: { params: Promise<{ id: strin
               <p className="text-xs font-normal text-black">{flavorText}</p>
             </div>
 
+            <h3 className='font-bold text-center' style={{ color: getTypeColor(pokemon.types[0].type.name) }}>Base Stats</h3>
+
 
           {/* <h1 className="text-3xl font-bold capitalize">{pokemon.name}</h1> */}
 
