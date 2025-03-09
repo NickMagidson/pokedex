@@ -6,12 +6,13 @@ import { getTypeColor, getTypeTitleColor } from '../utils/pokemonUtils';
 
 interface Params {
   params: {
-    id: string;
+    id: number;
   };
 }
 
 export default async function PokemonDetail({ params }: Params) {
-  const { id } = params;
+  const { id } = await params;
+  
   try {
     const [pokemonRes, speciesRes] = await Promise.all([
       fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
@@ -32,10 +33,13 @@ export default async function PokemonDetail({ params }: Params) {
       <>
         {/* Header */}
         <header className="flex justify-between items-center p-3 w-full">
+          <div className='flex flex-row items-center gap-3'>
           <Link href="/" className="flex items-center gap-3">
             <Image src="/arrow_back.png" alt="Back" width={30} height={30} />
           </Link>
           <h1 className="text-3xl font-bold capitalize">{pokemon.name}</h1>
+          </div>
+
           <p className="font-bold"># {pokemon.id}</p>
         </header>
 
@@ -44,14 +48,14 @@ export default async function PokemonDetail({ params }: Params) {
           <Image 
             src={pokemon.sprites.other['official-artwork'].front_default} 
             alt={pokemon.name} 
-            width={200} 
-            height={200} 
+            width={180} 
+            height={180} 
             className="mx-auto"
           />
         </div>
 
         {/* Info Card */}
-        <div className="w-11/12 p-4 mx-auto rounded-lg has-[]:] bg-white shadow-inner overflow-y-auto" style={{ height: '25rem' }}>
+        <div className="p-4 mx-auto rounded-lg mt-1 bg-white shadow-inner overflow-y-auto" style={{ height: '26.2rem', width: '98%' }}>
           
           {/* Types */}
           <div className="flex justify-center gap-2 mt-2">
