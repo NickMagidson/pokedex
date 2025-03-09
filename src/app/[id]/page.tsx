@@ -51,10 +51,10 @@ export default async function PokemonDetail({ params }: Params) {
         </div>
 
         {/* Info Card */}
-        <div className="w-11/12 p-4 mx-auto rounded-lg bg-white shadow-inner">
+        <div className="w-11/12 p-4 mx-auto rounded-lg has-[]:] bg-white shadow-inner overflow-y-auto" style={{ height: '25rem' }}>
           
           {/* Types */}
-          <div className="flex justify-center gap-2">
+          <div className="flex justify-center gap-2 mt-2">
             {pokemon.types.map((type: { type: { name: string } }) => (
               <span 
                 key={type.type.name} 
@@ -100,7 +100,7 @@ export default async function PokemonDetail({ params }: Params) {
           </div>
 
           {/* Base Stats Section */}
-          <h3 className={`text-center font-bold`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
+          <h3 className={`text-center font-bold mt-3`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
           <PokemonStats stats={pokemon.stats} primaryType={pokemon.types[0].type.name} />
         </div>
       </>
