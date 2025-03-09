@@ -68,23 +68,23 @@ export default async function PokemonDetail({ params }: { params: { id: string }
             <div className="flex flex-col items-center flex-1">
               <div className="flex items-center gap-2">
                 <Image src="/weight.png" alt="Weight" width={18} height={18} />
-                <p className='text-black'>{pokemon.weight / 10} kg</p>
+                <p className='text-black text-sm'>{pokemon.weight / 10} kg</p>
               </div>
-              <p className="text-sm text-gray-500">Weight</p>
+              <p className="text-xs text-gray-500">Weight</p>
             </div>
 
             {/* Height */}
             <div className="border-x-2 px-4 flex flex-col items-center">
               <div className="flex items-center gap-2">
                 <Image src="/height.png" alt="Height" width={18} height={18} />
-                <p className='text-black'>{pokemon.height / 10} m</p>
+                <p className='text-black text-sm'>{pokemon.height / 10} m</p>
               </div>
-              <p className="text-sm text-gray-500">Height</p>
+              <p className="text-xs text-gray-500">Height</p>
             </div>
 
             {/* Moves Placeholder */}
             <div className="flex flex-col items-center flex-1">
-              <p>Choose a move</p>
+              <p className='text-sm'>Choose a move</p>
               <p className="text-sm text-gray-500">Moves</p>
             </div>
           </div>
@@ -95,7 +95,7 @@ export default async function PokemonDetail({ params }: { params: { id: string }
           </div>
 
           {/* Base Stats Section */}
-          <h3 className={`text-center font-bold mt-4`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
+          <h3 className={`text-center font-bold`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
           <PokemonStats stats={pokemon.stats} primaryType={pokemon.types[0].type.name} />
         </div>
       </>
