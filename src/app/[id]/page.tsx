@@ -4,13 +4,18 @@ import Link from 'next/link';
 import PokemonStats from '../PokemonStats';
 import { getTypeColor, getTypeTitleColor } from '../utils/pokemonUtils';
 
+interface Params {
+  params: {
+    id: string;
+  };
+}
 
-
-export default async function PokemonDetail({ params }: { params: { id: string } }) {
+export default async function PokemonDetail({ params }: Params) {
+  const { id } = await params;
   try {
     const [pokemonRes, speciesRes] = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`),
-      fetch(`https://pokeapi.co/api/v2/pokemon-species/${params.id}`)
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
     ]);
 
     if (!pokemonRes.ok || !speciesRes.ok) {
