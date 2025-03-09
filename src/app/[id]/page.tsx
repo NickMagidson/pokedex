@@ -11,7 +11,7 @@ interface Params {
 }
 
 export default async function PokemonDetail({ params }: Params) {
-  const { id } = await params;
+  const { id } = params;
   try {
     const [pokemonRes, speciesRes] = await Promise.all([
       fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
