@@ -1,110 +1,112 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// import Header from '../../Header'
-
-const getTypeColor = (type: string) => {
-  switch (type) {
-    case 'fire':
-      return 'red';
-    case 'water':
-      return 'blue';
-    case 'grass':
-      return 'green';
-    case 'electric':
-      return 'yellow';
-    case 'ice':
-      return 'cyan';
-    case 'fighting':
-      return 'brown';
-    case 'poison':
-      return 'purple';
-    case 'ground':
-      return 'sandybrown';
-    case 'flying':
-      return 'skyblue';
-    case 'psychic':
-      return 'pink';
-    case 'bug':
-      return 'limegreen';
-    case 'rock':
-      return 'gray';
-    case 'ghost':
-      return 'indigo';
-    case 'dragon':
-      return 'orange';
-    case 'dark':
-      return 'black';
-    case 'steel':
-      return 'silver';
-    case 'fairy':
-      return 'magenta';
-    default:
-      return 'black';
-  }
-};
-
-export default async function PokemonDetail(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
-  if (!res.ok) return <h1>Pokémon not found</h1>;
-
-  const pokemon = await res.json();
-
-  return (
-    <>
-      {/* <Header /> */}
-      <header className='flex flex-row justify-between items-center gap-2 p-3 w-full'>
-        <Link href="/" className='flex flex-row items-center gap-3'>
-          <Image src="/arrow_back.png" alt="Back Arrow" width={30} height={30} />
-          <h1 className='font-bold text-3xl capitalize'>{pokemon.name}</h1>
-        </Link>
-        <p className='font-bold mr-1 '># {pokemon.id}</p>
-      </header>
-
-      <div className='px-2'>
+import PokemonStats from '../PokemonStats';
+import { getTypeColor, getTypeTitleColor } from '../utils/pokemonUtils';
 
 
-        <Image 
-          src={pokemon.sprites.other['official-artwork'].front_default} 
-          alt={pokemon.name} 
-          className='mx-auto'
-          width={200} 
-          height={200} />
+type Params = Promise<{ id: number }>;
 
-        <div 
-          className="gap-4 flex-grow row-start-2 justify-center items-center w-11/12 p-3 mx-auto
-          rounded-lg bg-white shadow-inner" 
-          style={{ 
-            boxShadow: 'rgba(0, 0, 0, 0.15) 0px 2px 4px inset, rgba(0, 0, 0, 0.65) 0px 2px 8px inset' 
-          }}
-        >
+export default async function PokemonDetail(props: { params: Params }) {
+  const { id } = await props.params;
+  
+  try {
+    const [pokemonRes, speciesRes] = await Promise.all([
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
+      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    ]);
 
-          <div className='flex flex-row gap-2 justify-center'>
-          {pokemon.types.map((type: { type: { name: string } }) => (
+    if (!pokemonRes.ok || !speciesRes.ok) {
+      return <h1 className="text-center text-2xl font-bold text-red-500">Pokémon not found</h1>;
+    }
+
+    const pokemon = await pokemonRes.json();
+    const speciesData = await speciesRes.json();
+
+    const flavorTextEntry = speciesData.flavor_text_entries.find((entry: { language: { name: string }, flavor_text: string }) => entry.language.name === 'en');
+    const flavorText = flavorTextEntry ? flavorTextEntry.flavor_text.replace(/\f/g, ' ') : 'No flavor text available';
+
+    return (
+      <>
+        {/* Header */}
+        <header className="flex justify-between items-center p-3 w-full">
+          <div className='flex flex-row items-center gap-3'>
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/arrow_back.png" alt="Back" width={30} height={30} />
+          </Link>
+          <h1 className="text-3xl font-bold capitalize">{pokemon.name}</h1>
+          </div>
+
+          <p className="font-bold"># {pokemon.id}</p>
+        </header>
+
+        {/* Pokémon Image */}
+        <div className="text-center">
+          <Image 
+            src={pokemon.sprites.other['official-artwork'].front_default} 
+            alt={pokemon.name} 
+            width={180} 
+            height={180} 
+            className="mx-auto"
+          />
+        </div>
+
+        {/* Info Card */}
+        <div className="p-4 mx-auto rounded-lg mt-1 bg-white shadow-inner overflow-y-auto" style={{ height: '26.2rem', width: '98%' }}>
+          
+          {/* Types */}
+          <div className="flex justify-center gap-2 mt-2">
+            {pokemon.types.map((type: { type: { name: string } }) => (
               <span 
                 key={type.type.name} 
-                className='capitalize text-xs px-3 py-1 font-bold text-white' 
-                style={{ borderRadius: "9999px",  backgroundColor: getTypeColor(type.type.name) }}
+                className={`capitalize text-xs px-3 py-1 font-bold text-white rounded-full ${getTypeColor(type.type.name)}`}
               >
-                {type.type.name} 
+                {type.type.name}
               </span>
             ))}
           </div>
 
+          {/* About Section */}
+            <h3 className="text-center font-bold mt-4" style={getTypeTitleColor(pokemon.types[0].type.name)}>About</h3>
 
+          <div className="flex justify-between py-3 border-t-2 border-b-2 mt-4">
+            {/* Weight */}
+            <div className="flex flex-col items-center flex-1">
+              <div className="flex items-center gap-2">
+                <Image src="/weight.png" alt="Weight" width={18} height={18} />
+                <p className='text-black text-sm'>{pokemon.weight / 10} kg</p>
+              </div>
+              <p className="text-xs text-gray-500">Weight</p>
+            </div>
 
+            {/* Height */}
+            <div className="border-x-2 px-4 flex flex-col items-center">
+              <div className="flex items-center gap-2">
+                <Image src="/height.png" alt="Height" width={18} height={18} />
+                <p className='text-black text-sm'>{pokemon.height / 10} m</p>
+              </div>
+              <p className="text-xs text-gray-500">Height</p>
+            </div>
 
-          {/* <h1 className="text-3xl font-bold capitalize">{pokemon.name}</h1> */}
+            {/* Moves Placeholder */}
+            <div className="flex flex-col items-center flex-1">
+              <p className='text-sm'>Choose a move</p>
+              <p className="text-sm text-gray-500">Moves</p>
+            </div>
+          </div>
 
-          {/* <p>Height: {pokemon.height}</p>
-          <p>Weight: {pokemon.weight}</p>
-          <p>Base experience: {pokemon.base_experience}</p> */}
+          {/* Flavor Text */}
+          <div className="p-4">
+            <p className="text-xs text-black">{flavorText}</p>
+          </div>
+
+          {/* Base Stats Section */}
+          <h3 className={`text-center font-bold mt-3`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
+          <PokemonStats stats={pokemon.stats} primaryType={pokemon.types[0].type.name} />
         </div>
-      </div>  
-
-
-    </>
-  
-  );
+      </>
+    );
+  } catch {
+    return <h1 className="text-center text-2xl font-bold text-red-500">Error fetching Pokémon data</h1>;
+  }
 }
