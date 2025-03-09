@@ -20,7 +20,7 @@ export default async function PokemonDetail({ params }: { params: { id: string }
     const pokemon = await pokemonRes.json();
     const speciesData = await speciesRes.json();
 
-    const flavorTextEntry = speciesData.flavor_text_entries.find((entry: any) => entry.language.name === 'en');
+    const flavorTextEntry = speciesData.flavor_text_entries.find((entry: { language: { name: string }, flavor_text: string }) => entry.language.name === 'en');
     const flavorText = flavorTextEntry ? flavorTextEntry.flavor_text.replace(/\f/g, ' ') : 'No flavor text available';
 
     return (
@@ -100,7 +100,7 @@ export default async function PokemonDetail({ params }: { params: { id: string }
         </div>
       </>
     );
-  } catch (error) {
+  } catch {
     return <h1 className="text-center text-2xl font-bold text-red-500">Error fetching Pokémon data</h1>;
   }
 }

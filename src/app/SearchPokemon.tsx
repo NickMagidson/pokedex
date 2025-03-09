@@ -1,12 +1,13 @@
 "use client"
 import { useState, useEffect } from 'react';
 import { usePokemon } from '../context/PokemonContext';
+import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 interface PokemonOption {
   name: string;
-  order: number;
+  id: number;
   sprite: string;
 }
 
@@ -19,6 +20,9 @@ export default function SearchPokemon() {
   const [inputValue, setInputValue] = useState(selectedPokemon);
   const [options, setOptions] = useState<PokemonOption[]>([]);
 
+  const router = useRouter()
+  
+
   useEffect(() => {
     const fetchPokemon = async () => {
       const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
@@ -29,6 +33,7 @@ export default function SearchPokemon() {
           const pokemonInfo = await pokemonDetails.json();
           return {
             name: pokemonInfo.name,
+            id: pokemonInfo.id,
             sprite: pokemonInfo.sprites.other['official-artwork'].front_default,
           };
         })
@@ -47,9 +52,11 @@ export default function SearchPokemon() {
   const handleSelect = (event: React.SyntheticEvent<Element, Event>, newValue: PokemonOption | null) => {
     if (newValue) {
       setSelectedPokemon(newValue.name);
-      console.log(`Selected Pokémon: ${newValue.name}`);
+      router.push(`/${newValue.id}`);
+      // console.log(`Selected Pokémon: ${newValue.name}`);
     }
   };
+  
 
   return (
     <Autocomplete
