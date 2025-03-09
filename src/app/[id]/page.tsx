@@ -4,14 +4,11 @@ import Link from 'next/link';
 import PokemonStats from '../PokemonStats';
 import { getTypeColor, getTypeTitleColor } from '../utils/pokemonUtils';
 
-interface Params {
-  params: {
-    id: number;
-  };
-}
 
-export default async function PokemonDetail({ params }: Params) {
-  const { id } = await params;
+type Params = Promise<{ id: number }>;
+
+export default async function PokemonDetail(props: { params: Params }) {
+  const { id } = await props.params;
   
   try {
     const [pokemonRes, speciesRes] = await Promise.all([
