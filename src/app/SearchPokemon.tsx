@@ -4,6 +4,7 @@ import { usePokemon } from '../context/PokemonContext';
 import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Image from 'next/image';
 
 interface PokemonOption {
   name: string;
@@ -68,16 +69,21 @@ export default function SearchPokemon() {
       onInputChange={handleSearch}
       onChange={handleSelect}
       className='rounded-lg'
-      // renderOption={(props, option) => (
-      //   <li {...props}>
-      //     <img
-      //       src={option.sprite}
-      //       alt={option.name}
-      //       style={{ marginRight: 8, width: 40, height: 40 }}
-      //     />
-      //     {option.name}
-      //   </li>
-      // )}
+      renderOption={(props, option) => {
+        const { key, ...rest } = props;
+        return (
+          <li key={key} {...rest}>
+            <Image
+              src={option.sprite}
+              alt={option.name}
+              width={40}
+              height={40}
+              style={{ marginRight: 8 }}
+            />
+            {option.name}
+          </li>
+        );
+      }}
       renderInput={(params) => (
         <TextField {...params} label="Search Pokémon!" />
       )}
