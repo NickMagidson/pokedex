@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <Suspense fallback={<h1 style={{ fontSize: '2em', textAlign: 'center' }}>Loading...</h1>}>
+      <Suspense fallback={<h1 style={{ fontSize: '2em', textAlign: 'center', fontWeight: 'bold', padding: '3rem' }}>Loading...</h1>}>
         <SearchPokemon />
         <PokemonCardList pokemonList={pokemonData} />  
       </Suspense>
