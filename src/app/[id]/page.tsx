@@ -28,7 +28,7 @@ export default async function PokemonDetail(props: { params: Params }) {
 
     return (
       <>
-        <div style={{ height: '100%', background: `${getTypeColor(pokemon.types[0].type.name)}` }}>
+        <div style={{ height: '100vh', background: `${getTypeColor(pokemon.types[0].type.name)}` }}>
         {/* Header */}
         <header className="flex justify-between items-center p-3 w-full">
           <div className='flex flex-row items-center gap-3'>
