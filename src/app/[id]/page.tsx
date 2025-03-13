@@ -28,6 +28,7 @@ export default async function PokemonDetail(props: { params: Params }) {
 
     return (
       <>
+        <div style={{ background: `${getTypeColor(pokemon.types[0].type.name)}` }}>
         {/* Header */}
         <header className="flex justify-between items-center p-3 w-full">
           <div className='flex flex-row items-center gap-3'>
@@ -41,13 +42,13 @@ export default async function PokemonDetail(props: { params: Params }) {
         </header>
 
         {/* Pokémon Image */}
-        <div className="text-center">
+        <div className="text-center h-48">
           <Image 
             src={pokemon.sprites.other['official-artwork'].front_default} 
             alt={pokemon.name} 
-            width={180} 
-            height={180} 
-            className="mx-auto"
+            width={230} 
+            height={200} 
+            className="mx-auto relative top-4 "
           />
         </div>
 
@@ -57,7 +58,7 @@ export default async function PokemonDetail(props: { params: Params }) {
           {/* Types */}
           <div className="flex justify-center gap-2 mt-2">
             {pokemon.types.map((type: { type: { name: string } }) => (
-              <span 
+              <span   
                 key={type.type.name} 
                 className={`capitalize text-xs px-3 py-1 font-bold text-white rounded-full ${getTypeColor(type.type.name)}`}
               >
@@ -103,6 +104,7 @@ export default async function PokemonDetail(props: { params: Params }) {
           {/* Base Stats Section */}
           <h3 className={`text-center font-bold mt-3`} style={getTypeTitleColor(pokemon.types[0].type.name)}>Base Stats</h3>
           <PokemonStats stats={pokemon.stats} primaryType={pokemon.types[0].type.name} />
+        </div>
         </div>
       </>
     );

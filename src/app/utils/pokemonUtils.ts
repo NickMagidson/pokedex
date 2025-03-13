@@ -1,24 +1,24 @@
 export const getTypeColor = (type: string) => {
   const colors: Record<string, string> = {
-    fire: 'bg-red-500',
-    water: 'bg-blue-500',
-    grass: 'bg-green-500',
-    electric: 'bg-yellow-400',
-    ice: 'bg-cyan-400',
-    fighting: 'bg-orange-700',
-    poison: 'bg-purple-500',
-    ground: 'bg-yellow-600',
-    flying: 'bg-sky-400',
-    psychic: 'bg-pink-500',
-    bug: 'bg-lime-500',
-    rock: 'bg-gray-600',
-    ghost: 'bg-indigo-600',
-    dragon: 'bg-orange-600',
-    dark: 'bg-gray-900',
-    steel: 'bg-gray-400',
-    fairy: 'bg-pink-300',
+    fire: '#F57D31',     // Fire
+    water: '#6493EB',    // Water
+    grass: '#74CB48',    // Grass
+    electric: '#F9CF30', // Electric
+    ice: '#9AD6DF',      // Ice
+    fighting: '#C12239', // Fighting
+    poison: '#A43E9E',   // Poison
+    ground: '#DEC16B',   // Ground
+    flying: '#A891EC',   // Flying
+    psychic: '#FB5584',  // Psychic
+    bug: '#A7B723',      // Bug
+    rock: '#B69E31',     // Rock
+    ghost: '#70559B',    // Ghost
+    dragon: '#7037FF',   // Dragon
+    dark: '#75574C',     // Dark
+    steel: '#B7B9D0',    // Steel
+    fairy: '#E69EAC',    // Fairy
   };
-  return colors[type] || 'bg-gray-900';
+  return colors[type.toLowerCase()] || '#75574C'; // Default to Dark type color
 };
 
 export const getTypeTitleColor = (type: string) => {

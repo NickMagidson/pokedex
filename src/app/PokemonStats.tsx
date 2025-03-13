@@ -17,8 +17,8 @@ export default function PokemonStats({ stats, primaryType }: { stats: Stat[]; pr
           <span className="w-10 text-center text-xs text-black">{stat.base_stat}</span>
           <div className="w-full h-1 bg-gray-200 rounded-lg overflow-hidden ml-2">
             <div 
-              className={`h-full ${getTypeColor(primaryType)}`} 
-              style={{ width: `${(stat.base_stat / MAX_STAT) * 100}%` }}
+              className={`h-full`} 
+              style={{ width: `${(stat.base_stat / MAX_STAT) * 100}%`, background: `${getTypeColor(primaryType)}` }}
             />
           </div>
         </div>
